@@ -2,6 +2,7 @@ const { Client, IntentsBitField, ActivityType } = require('discord.js');
 const { statuses, chooseStatuses } = require('./utils/statuses.js');
 const eventHandler = require('./handlers/eventHandler');
 
+// Specify intents
 const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
@@ -11,6 +12,7 @@ const client = new Client({
   ],
 });
 
+// Listen for onReady event, log and start status loop
 client.on('ready', (c) => {
   console.log(c.user.tag + ' initialized!');
 
@@ -20,18 +22,8 @@ client.on('ready', (c) => {
   }, 1000000);
 });
 
-client.on('interactionCreate', (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-
-  switch (interaction.commandName) {
-    case 'add':
-      var fo = interaction.options.get('first-number').value;
-      var so = interaction.options.get('second-number').value;
-      var sum = fo + so;
-      interaction.reply(fo + ' + ' + so + ' = ' + sum);
-  }
-});
-
+// Run event handlers
 eventHandler(client);
 
+// Log into client
 client.login(process.env['TOKEN']);
