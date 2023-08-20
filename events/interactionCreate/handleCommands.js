@@ -1,7 +1,7 @@
 const { devs, testServer } = require('../../config.json');
 const getLocalCommands = require('../../utils/getLocalCommands');
 
-module.exports =  async (client, interaction) => {
+module.exports = async (client, interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   const localCommands = getLocalCommands();
@@ -14,7 +14,7 @@ module.exports =  async (client, interaction) => {
     // Check if devOnly
     if (commandObject.devOnly) {
       if (!devs.includes(interaction.member.id)) {
-        interaction.reply({
+        await interaction.reply({
           content: 'DEV: Only devs can run this command',
           ephemeral: true,
         });
@@ -25,7 +25,7 @@ module.exports =  async (client, interaction) => {
     // Check if testOnly
     if (commandObject.testOnly) {
       if (!(interaction.guild.id === testServer)) {
-        interaction.reply({
+        await interaction.reply({
           content: 'TEST: This command cannot be run here',
           ephemeral: true,
         });
@@ -37,7 +37,7 @@ module.exports =  async (client, interaction) => {
     if (commandObject.permissionsRequired?.length) {
       for (const permission of commandObject.permissionsRequired) {
         if (!interaction.member.permissions.has(permission)) {
-          interaction.reply({
+          await interaction.reply({
             content: 'PERM: You do not have permission to run this command',
             ephemeral: true,
           });
@@ -52,7 +52,7 @@ module.exports =  async (client, interaction) => {
         const bot = interaction.guild.members.me;
         
         if (!bot.permissions.has(permission)) {
-          interaction.reply({
+          await interaction.reply({
             content: 'PERM: Bot does not have permission to run this command',
             ephemeral: true,
           });

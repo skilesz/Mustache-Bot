@@ -19,9 +19,10 @@ module.exports = {
       .setStyle(ButtonStyle.Primary);
 
     await interaction.reply({
-      content: '**Welcome to Mustache Marketplace!\n' +
+      content: '**Welcome to Mustache Marketplace!**\n\n' +
         'Please choose a shop:',
-      components: [ new ActionRowBuilder().addComponents(alphaPotionsButton, alphaEnchantmentsButton) ]
+      components: [new ActionRowBuilder().addComponents(alphaPotionsButton, alphaEnchantmentsButton)],
+      ephemeral: true
     });
   },
 };

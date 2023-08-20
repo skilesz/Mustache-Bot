@@ -1,6 +1,8 @@
-const { Client, IntentsBitField, ActivityType } = require('discord.js');
-const { statuses, chooseStatuses } = require('./utils/statuses.js');
+const { Client, Collection, IntentsBitField } = require('discord.js');
+const { chooseStatuses } = require('./utils/statuses.js');
+const mongoose = require('mongoose');
 const eventHandler = require('./handlers/eventHandler');
+const componentHandler = require('./handlers/componentHandler');
 
 // Specify intents
 const client = new Client({
@@ -12,6 +14,10 @@ const client = new Client({
   ],
 });
 
+client.buttons = new Collection();
+client.modals = new Collection();
+client.selectMenus = new Collection();
+
 // Listen for onReady event, log and start status loop
 client.on('ready', (c) => {
   console.log(c.user.tag + ' initialized!');
@@ -22,8 +28,18 @@ client.on('ready', (c) => {
   }, 1000000);
 });
 
-// Run event handlers
-eventHandler(client);
+// Connet to MongoDB and run handlers
+(async () => {
+  try {
+    await mongoose.connect(process.env['MONGODB']);
+    console.log('Connected to DB!');
+  
+    eventHandler(client);
+    componentHandler(client);
+  } catch (err) {
+    console.log(`ERROR (index.js): ${err}`);
+  }
+})();
 
 // Log into client
 client.login(process.env['TOKEN']);
