@@ -3,7 +3,7 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 module.exports = {
   name: 'shop',
   description: 'Displays shop options',
-  devOnly: true,
+  //devOnly: true,
   // testOnly: Boolean,
   // options: Object[],
 

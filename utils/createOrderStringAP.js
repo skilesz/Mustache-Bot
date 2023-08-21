@@ -7,7 +7,7 @@ module.exports = (order) => {
     const { name, form, amount, enhanced, pricePerUnit, currency } = potion;
     
     orderString += (amount > 0) ? `[+${amount * pricePerUnit} ${currency}]` +
-      ` ${name} (${form}): ${amount * 3} potions` : '';;
+      ` ${name} (${form}): ${amount * 3} potions` : '';
     orderString += (enhanced > 0 && enhanced <= amount) ? `\t[+${enhanced * 20} Iron]` +
       ` (${enhanced * 3} enhanced)\n` : '\n';
   }
