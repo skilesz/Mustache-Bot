@@ -24,11 +24,11 @@ module.exports = {
 
       const { enchantments, currentSelections } = order;
 
-      // Search to see if potion order exists
+      // Search to see if enchantment order exists
       const index = enchantments.findIndex((enchantment) => (enchantment.name == currentSelections.currentName &&
                                                    enchantment.level == currentSelections.currentLevel));
 
-      // If potions order exists, edit existing order
+      // If enchantment order exists, edit existing order
       if (index != -1) {
         const { level, amount, pricePerUnit } = order.enchantments[index];
         
@@ -36,7 +36,7 @@ module.exports = {
 
         order.totalPrice.totalDiamond += pricePerUnit;
         
-      } else { // Create new potion order and push to potions array
+      } else { // Create new enchantment order and push to enchantments array
         var result = {
           name: currentSelections.currentName,
           level: currentSelections.currentLevel,
