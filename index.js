@@ -43,3 +43,5 @@ client.on('ready', (c) => {
 
 // Log into client
 client.login(process.env['TOKEN']);
+
+require('http').createServer((req, res) => res.end('Bot is alive!')).listen(3000);
