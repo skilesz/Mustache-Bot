@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'ping',
+  name: (process.env['ENV'] == 'DEV') ? 'ping-dev' : 'ping',
   description: 'Replies with bot ping',
-  // devOnly: Boolean,
+  devOnly: (process.env['ENV'] == 'DEV'),
   // testOnly: Boolean,
   // options: Object[],
 

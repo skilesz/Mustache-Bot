@@ -12,7 +12,6 @@ const orderCBSSchema = new Schema({
     currentForm: String,
     currentPage: Number
   },
-  totalPages: Number,
   itemOrders: [{ category: String, name: String, form: String, amount: Number, itemsPerUnit: Number, pricePerUnit: Number, currency: String }],
   totalPrice: {
     totalIron: Number,

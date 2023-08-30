@@ -1,22 +1,25 @@
 const { Schema, model } = require('mongoose');
 
-const orderAESchema = new Schema({
+const orderABSchema = new Schema({
   id: String,
   status: String,
   shopName: String,
   customer: { displayName: String, id: String },
   shopOwner: { displayName: String, id: String },
   currentSelections: {
+    currentCategory: String,
     currentName: String,
-    currentLevel: String,
+    currentForm: String,
+    currentColor: String,
     currentPage: Number
   },
-  enchantments: [{ name: String, level: String, amount: Number, pricePerUnit: Number, currency: String }],
+  itemOrders: [{ category: String, name: String, form: String, color: String, amount: Number, itemsPerUnit: Number, pricePerUnit: Number, currency: String }],
   totalPrice: {
+    totalIron: Number,
     totalDiamond: Number
   },
   customerReceipt: String,
   merchantTicket: String
 });
 
-module.exports = model('OrderAE', orderAESchema);
+module.exports = model('OrderAB', orderABSchema);
