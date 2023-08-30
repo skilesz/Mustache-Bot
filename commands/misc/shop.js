@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const createShopSelect = require('../../utils/createShopSelect.js');
 
 module.exports = {
   name: 'shop',
@@ -8,26 +8,6 @@ module.exports = {
   // options: Object[],
 
   callback: async (client, interaction) => {
-    const alphaPotionsButton = new ButtonBuilder()
-      .setCustomId('alphaPotions')
-      .setLabel('Alpha Potions')
-      .setStyle(ButtonStyle.Primary);
-
-    const alphaEnchantmentsButton = new ButtonBuilder()
-      .setCustomId('alphaEnchantments')
-      .setLabel('Alpha Enchantments')
-      .setStyle(ButtonStyle.Primary);
-
-    const chipsBuildingSupplyButton = new ButtonBuilder()
-      .setCustomId('chipsBuildingSupply')
-      .setLabel('Chip\'s Building Supply Store')
-      .setStyle(ButtonStyle.Primary);
-
-    await interaction.reply({
-      content: '**Welcome to Mustache Marketplace!**\n\n' +
-        'Please choose a shop:',
-      components: [new ActionRowBuilder().addComponents(alphaPotionsButton, alphaEnchantmentsButton, chipsBuildingSupplyButton)],
-      ephemeral: true
-    });
-  },
+    await interaction.reply(createShopSelect('Alpha Enchantments'));
+  }
 };

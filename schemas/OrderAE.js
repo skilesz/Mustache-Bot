@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const orderAESchema = new Schema({
   id: String,
   status: String,
+  shopName: String,
   customer: { displayName: String, id: String },
   shopOwner: { displayName: String, id: String },
   currentSelections: {
