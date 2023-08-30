@@ -1,9 +1,9 @@
 const createShopSelect = require('../../utils/createShopSelect.js');
 
 module.exports = {
-  name: 'shop',
+  name: (process.env['ENV'] == 'DEV') ? 'shop-dev' : 'shop',
   description: 'Displays shop options',
-  //devOnly: true,
+  devOnly: (process.env['ENV'] == 'DEV'),
   // testOnly: Boolean,
   // options: Object[],
 

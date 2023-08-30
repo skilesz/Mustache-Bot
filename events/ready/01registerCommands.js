@@ -3,14 +3,13 @@ const getLocalCommands = require('../../utils/getLocalCommands');
 const getApplicationCommands = require('../../utils/getApplicationCommands');
 const areCommandsDifferent = require('../../utils/areCommandsDifferent');
 
-module.exports = async (client) => {
+module.exports = async (client, arg) => {
   try {
     // Get local and application commands
     const localCommands = getLocalCommands();
     const applicationCommandManager = await getApplicationCommands(client, testServer);
     const applicationCommandArray = Array.from(await applicationCommandManager.fetch());
-    const applicationCommands = applicationCommandArray.map((cmd) => cmd[1]);
-
+    const applicationCommands = await applicationCommandArray.map((cmd) => cmd[1]);
 
     // For each application command, check if existing local command. If not, delete command
     for (const applicationCommand of applicationCommands) {

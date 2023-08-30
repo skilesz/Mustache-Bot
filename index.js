@@ -19,7 +19,7 @@ client.modals = new Collection();
 client.selectMenus = new Collection();
 
 // Listen for onReady event, log and start status loop
-client.on('ready', (c) => {
+client.once('ready', (c) => {
   console.log(c.user.tag + ' initialized!');
 
   chooseStatuses(client);
@@ -28,18 +28,20 @@ client.on('ready', (c) => {
   }, 1000000);
 });
 
-// Connet to MongoDB and run handlers
+// Connet to MongoDB
 (async () => {
   try {
     await mongoose.connect(process.env['MONGODB']);
     console.log('Connected to DB!');
   
-    eventHandler(client);
-    componentHandler(client);
   } catch (err) {
     console.log(`ERROR (index.js): ${err}`);
   }
 })();
+
+// Run handlers
+eventHandler(client);
+componentHandler(client);
 
 // Log into client
 client.login(process.env['TOKEN']);
