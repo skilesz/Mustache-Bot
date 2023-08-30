@@ -18,22 +18,23 @@ module.exports = (client) => {
         for (const file of componentFiles) {
           const button = require('../components/' + folder + '/' + file);
           buttons.set(button.data.name, button);
-          console.log(`Registered ${button.data.name} button`);
         }
+        console.log('Registered buttons');
         break;
       case 'modals':
         for (const file of componentFiles) {
           const modal = require(`../components/${folder}/${file}`);
           modals.set(modal.data.name, modal);
-          console.log(`Registered ${modal.data.name} modal`);
         }
+        console.log('Registered modals');
         break;
       case 'selectMenus':
         for (const file of componentFiles) {
           const menu = require(`../components/${folder}/${file}`);
           selectMenus.set(menu.data.name, menu);
-          console.log(`Registered ${menu.data.name} select menu`);
         }
+        console.log('Registered select menus');
+        break;
       default:
         break;
     }
