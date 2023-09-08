@@ -15,7 +15,8 @@ const orderCBSSchema = new Schema({
   itemOrders: [{ category: String, name: String, form: String, amount: Number, itemsPerUnit: Number, pricePerUnit: Number, currency: String }],
   totalPrice: {
     totalIron: Number,
-    totalGold: Number
+    totalGold: Number,
+    totalDiamond: Number
   },
   customerReceipt: String,
   merchantTicket: String
