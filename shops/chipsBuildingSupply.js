@@ -23,37 +23,153 @@ module.exports = {
     }, 
     {
       category: 'Stone',
-      items: [ 'Smoothstone', 'Cobblestone', 'Bricks (block)', 'Stone Bricks' ],
-      itemsPerUnit: 32,
-      pricePerUnit: 15,
-      currency: 'Iron'
-    }, 
+      items: [
+        {
+          name: 'Smoothstone',
+          itemsPerUnit: 64,
+          pricePerUnit: 5,
+          currency: 'Iron'
+        }, 
+        {
+          name: 'Cobblestone',
+          itemsPerUnit: 64,
+          pricePerUnit: 1,
+          currency: 'Iron'
+        },
+        {
+          name: 'Bricks (block)',
+          itemsPerUnit: 64,
+          pricePerUnit: 20,
+          currency: 'Iron'
+        },
+        {
+          name: 'Stone Bricks',
+          itemsPerUnit: 64,
+          pricePerUnit: 10,
+          currency: 'Iron'
+        },
+        {
+          name: 'Sandstone',
+          itemsPerUnit: 64,
+          pricePerUnit: 20,
+          currency: 'Iron'
+        },
+        {
+          name: 'Nether Quartz (block)',
+          itemsPerUnit: 64,
+          pricePerUnit: 5,
+          currency: 'Diamond'
+        },
+        {
+          name: 'Sand',
+          itemsPerUnit: 64,
+          pricePerUnit: 5,
+          currency: 'Iron'
+        },
+        {
+          name: 'Gravel',
+          itemsPerUnit: 64,
+          pricePerUnit: 10,
+          currency: 'Iron'
+        },
+        {
+          name: 'Andesite',
+          itemsPerUnit: 64,
+          pricePerUnit: 20,
+          currency: 'Iron'
+        },
+        {
+          name: 'Diorite',
+          itemsPerUnit: 64,
+          pricePerUnit: 5,
+          currency: 'Iron'
+        },
+        {
+          name: 'Granite',
+          itemsPerUnit: 64,
+          pricePerUnit: 10,
+          currency: 'Iron'
+        }
+      ]
+    },
+    {
+      category: 'Dirt',
+      items: [ 
+        {
+          name: 'Dirt',
+          itemsPerUnit: 64,
+          pricePerUnit: 1,
+          currency: 'Iron'
+        }, 
+        {
+          name: 'Coarse Dirt',
+          itemsPerUnit: 64,
+          pricePerUnit: 1,
+          currency: 'Diamond'
+        }, 
+        {
+          name: 'Podzol',
+          itemsPerUnit: 64,
+          pricePerUnit: 30,
+          currency: 'Iron'
+        }
+      ]
+    },
     {
       category: 'Materials',
       items: [ 
         {
           name: 'Bricks (item)',
           itemsPerUnit: 64,
-          pricePerUnit: 2,
+          pricePerUnit: 10,
           currency: 'Iron'
         }, 
         {
           name: 'Clay',
-          itemsPerUnit: 32,
-          pricePerUnit: 1,
+          itemsPerUnit: 64,
+          pricePerUnit: 5,
           currency: 'Iron'
         }, 
         {
           name: 'Redstone Dust',
-          itemsPerUnit: 32,
+          itemsPerUnit: 64,
           pricePerUnit: 5,
           currency: 'Gold'
         }, 
         {
           name: 'Glowstone Dust',
-          itemsPerUnit: 32,
+          itemsPerUnit: 64,
           pricePerUnit: 5,
           currency: 'Gold'
+        }
+      ]
+    },
+    {
+      category: 'Furniture',
+      items: [ 
+        {
+          name: 'Torches',
+          itemsPerUnit: 4,
+          pricePerUnit: 1,
+          currency: 'Gold'
+        }, 
+        {
+          name: 'Lantern',
+          itemsPerUnit: 1,
+          pricePerUnit: 5,
+          currency: 'Gold'
+        }, 
+        {
+          name: 'Cauldron',
+          itemsPerUnit: 1,
+          pricePerUnit: 5,
+          currency: 'Diamond'
+        }, 
+        {
+          name: 'Anvil',
+          itemsPerUnit: 1,
+          pricePerUnit: 10,
+          currency: 'Diamond'
         }
       ]
     }
@@ -84,7 +200,8 @@ module.exports = {
       itemOrders: [],
       totalPrice: {
         totalIron: 0,
-        totalGold: 0
+        totalGold: 0,
+        totalDiamond: 0
       }
     });
 
@@ -136,51 +253,37 @@ module.exports = {
     var currentCategory = this.menu.find((itemObj) => itemObj.category == currentSelections.currentCategory);
     const { category, items } = currentCategory;
     
-    switch (category) {
-      case 'Wood':
-        for (const item of items) {
-          nameSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
-            label: item,
-            value: item,
-            default: (currentSelections.currentName == item)
-          }));
-        }
-  
-        for (const form of currentCategory.forms) {
-          formSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
-            label: form,
-            value: form,
-            default: (currentSelections.currentForm == form)
-          }));
-        }
-  
-        result.components.push(new ActionRowBuilder().addComponents(nameSelectMenu));
-        result.components.push(new ActionRowBuilder().addComponents(formSelectMenu));
-        break;
-      case 'Stone':
-        for (const item of items) {
-          nameSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
-            label: item,
-            value: item,
-            default: (currentSelections.currentName == item)
-          }));
-        }
-  
-        result.components.push(new ActionRowBuilder().addComponents(nameSelectMenu));
-        break;
-      case 'Materials':
-        for (const item of items) {
-          const { name } = item;
-          
-          nameSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
-            label: name,
-            value: name,
-            default: (currentSelections.currentName == name)
-          }));
-        }
-  
-        result.components.push(new ActionRowBuilder().addComponents(nameSelectMenu));
-        break;
+    if (category == 'Wood') {
+      for (const item of items) {
+        nameSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
+          label: item,
+          value: item,
+          default: (currentSelections.currentName == item)
+        }));
+      }
+
+      for (const form of currentCategory.forms) {
+        formSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
+          label: form,
+          value: form,
+          default: (currentSelections.currentForm == form)
+        }));
+      }
+
+      result.components.push(new ActionRowBuilder().addComponents(nameSelectMenu));
+      result.components.push(new ActionRowBuilder().addComponents(formSelectMenu));
+    } else {
+      for (const item of items) {
+        const { name } = item;
+        
+        nameSelectMenu.addOptions(new StringSelectMenuOptionBuilder({
+          label: name,
+          value: name,
+          default: (currentSelections.currentName == name)
+        }));
+      }
+
+      result.components.push(new ActionRowBuilder().addComponents(nameSelectMenu));
     }
   
     const addToOrderButton = new ButtonBuilder()
@@ -226,7 +329,7 @@ module.exports = {
       orderString += `: ${amount * itemsPerUnit}\n`;
     }
   
-    orderString += `\n**TOTAL PRICE:** ${totalPrice.totalIron} Iron, ${totalPrice.totalGold} Gold\n`;
+    orderString += `\n**TOTAL PRICE:** ${totalPrice.totalIron} Iron, ${totalPrice.totalGold} Gold, ${totalPrice.totalDiamond} Diamond\n`;
   
     orderString += `\nCustomer: ${customer.displayName}\n` +
       `Shop Owner: ${shopOwner.displayName}\n` +
@@ -253,15 +356,11 @@ module.exports = {
 
     const currentCategory = this.menu.find((cat) => cat.category == value);
     
-    switch (value) {
-      case 'Wood':
-        order.currentSelections.currentForm = currentCategory.forms[0];
-      case 'Stone':
-        order.currentSelections.currentName = currentCategory.items[0];
-        break;
-      case 'Materials':
-        order.currentSelections.currentName = currentCategory.items[0].name;
-        break;
+    if (value == 'Wood') {
+      order.currentSelections.currentForm = currentCategory.forms[0];
+      order.currentSelections.currentName = currentCategory.items[0];
+    } else {
+      order.currentSelections.currentName = currentCategory.items[0].name;
     }
 
     return order;
@@ -280,7 +379,8 @@ module.exports = {
     
     order.totalPrice = {
       totalIron: 0,
-      totalGold: 0
+      totalGold: 0,
+      totalDiamond: 0
     };
 
     order.itemOrders = [];
@@ -305,7 +405,7 @@ module.exports = {
       return condition;
     });
 
-    // If potions order exists, edit existing order
+    // If item order exists, edit existing order
     if (index != -1) {
       const { amount, pricePerUnit, currency } = order.itemOrders[index];
 
@@ -318,9 +418,12 @@ module.exports = {
         case 'Gold':
           order.totalPrice.totalGold += pricePerUnit;
           break;
+        case 'Diamond':
+          order.totalPrice.totalDiamond += pricePerUnit;
+          break;
       }
 
-    } else { // Create new potion order and push to potions array
+    } else { // Create new item order and push to itemOrders array
       var result = {
         category: currentSelections.currentCategory,
         name: currentSelections.currentName,
@@ -333,20 +436,16 @@ module.exports = {
 
       const currentCategory = this.menu.find((itemObj) => itemObj.category == currentSelections.currentCategory);
 
-      switch (currentCategory.category) {
-        case 'Wood':
-        case 'Stone':
-          result.pricePerUnit = currentCategory.pricePerUnit;
-          result.currency = currentCategory.currency;
-          result.itemsPerUnit = currentCategory.itemsPerUnit;
-          break;
-        case 'Materials':
-          const currentItem = currentCategory.items.find((item) => item.name == currentSelections.currentName);
+      if (currentCategory.category == 'Wood') {
+        result.pricePerUnit = currentCategory.pricePerUnit;
+        result.currency = currentCategory.currency;
+        result.itemsPerUnit = currentCategory.itemsPerUnit;
+      } else {
+        const currentItem = currentCategory.items.find((item) => item.name == currentSelections.currentName);
 
-          result.pricePerUnit = currentItem.pricePerUnit;
-          result.currency = currentItem.currency;
-          result.itemsPerUnit = currentItem.itemsPerUnit;
-          break;
+        result.pricePerUnit = currentItem.pricePerUnit;
+        result.currency = currentItem.currency;
+        result.itemsPerUnit = currentItem.itemsPerUnit;
       }
 
       switch (result.currency) {
@@ -355,6 +454,9 @@ module.exports = {
           break;
         case 'Gold':
           order.totalPrice.totalGold += result.pricePerUnit;
+          break;
+        case 'Diamond':
+          order.totalPrice.totalDiamond += result.pricePerUnit;
           break;
       }
 
